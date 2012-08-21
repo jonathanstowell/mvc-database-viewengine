@@ -36,7 +36,7 @@ namespace databaseviewengine
             RegisterRoutes(RouteTable.Routes);
 
             System.Web.Mvc.ViewEngines.Engines.Clear();
-            System.Web.Mvc.ViewEngines.Engines.Add(new MongoViewEngine());
+            System.Web.Mvc.ViewEngines.Engines.Insert(0, new MongoViewEngine());
 
             HostingEnvironment.RegisterVirtualPathProvider(new MongoVirtualPathProvider());
         }

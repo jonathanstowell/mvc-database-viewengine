@@ -1,60 +1,45 @@
 ﻿using System.Web.Mvc;
+using databaseviewengine.RequestContext;
 
 namespace databaseviewengine.ViewEngines
 {
     public class MongoViewEngine : RazorViewEngine
     {
+        internal static readonly string ViewStartFileName = "~/Views/_ViewStart";
+
+        private readonly ProvideRequestContext requestContext;
+
         public MongoViewEngine() : this(null)
         {
         }
 
         public MongoViewEngine(IViewPageActivator viewPageActivator) : base(viewPageActivator)
         {
-            AreaViewLocationFormats = new[]
-                                    {
-                                        "~/Areas/{2}/Views/{1}/{0}.cshtml",
-                                        "~/Areas/{2}/Views/{1}/{0}",
-                                        "~/Areas/{2}/Views/Shared/{0}.cshtml",
-                                        "~/Areas/{2}/Views/Shared/{0}"
-                                    };
+            requestContext = new ProvideRequestContext();
 
-            AreaMasterLocationFormats = new[]
-                                        {
-                                            "~/Areas/{2}/Views/{1}/{0}.cshtml",
-                                            "~/Areas/{2}/Views/{1}/{0}",
-                                            "~/Areas/{2}/Views/Shared/{0}.cshtml",
-                                            "~/Areas/{2}/Views/Shared/{0}"
-                                        };
-
-            AreaPartialViewLocationFormats = new[]
-                                            {
-                                                "~/Areas/{2}/Views/{1}/{0}.cshtml",
-                                                "~/Areas/{2}/Views/{1}/{0}",
-                                                "~/Areas/{2}/Views/Shared/{0}.cshtml",
-                                                "~/Areas/{2}/Views/Shared/{0}"
-                                            };
             ViewLocationFormats = new[]
                                 {
-                                    "~/Views/{1}/{0}.cshtml",
-                                    "~/Views/{1}/{0}",
-                                    "~/Views/Shared/{0}.cshtml",
-                                    "~/Views/Shared/{0}"
+                                    "~/Plugins/Views/" + requestContext.CurrentHost + "/{1}/{0}.cshtml",
+                                    "~/Plugins/Views/default/{1}/{0}.cshtml",
+                                    "~/Views/" + requestContext.CurrentHost + "/{1}/{0}.cshtml",
+                                    "~/Views/default/{1}/{0}.cshtml",
+                                    "~/Plugins/Views/" + requestContext.CurrentHost + "/Shared/{0}.cshtml",
+                                    "~/Plugins/Views/default/Shared/{0}.cshtml",
+                                    "~/Views/" + requestContext.CurrentHost + "/Shared/{0}.cshtml",
+                                    "~/Views/default/Shared/{0}.cshtml"
+                                    
                                 };
-
-            MasterLocationFormats = new[]
-                                    {
-                                        "~/Views/{1}/{0}.cshtml",
-                                        "~/Views/{1}/{0}",
-                                        "~/Views/Shared/{0}.cshtml",
-                                        "~/Views/Shared/{0}"
-                                    };
 
             PartialViewLocationFormats = new[]
                                         {
-                                            "~/Views/{1}/{0}.cshtml",
-                                            "~/Views/{1}/{0}",
-                                            "~/Views/Shared/{0}.cshtml",
-                                            "~/Views/Shared/{0}"
+                                            "~/Plugins/Views/" + requestContext.CurrentHost + "/{1}/{0}.cshtml",
+                                            "~/Plugins/Views/default/{1}/{0}.cshtml",
+                                            "~/Views/" + requestContext.CurrentHost + "/{1}/{0}.cshtml",
+                                            "~/Views/default/{1}/{0}.cshtml",
+                                            "~/Plugins/Views/" + requestContext.CurrentHost + "/Shared/{0}.cshtml",
+                                             "~/Plugins/Views/default/Shared/{0}.cshtml",
+                                            "~/Views/" + requestContext.CurrentHost + "/Shared/{0}.cshtml",
+                                            "~/Views/default/Shared/{0}.cshtml"
                                         };
 
             FileExtensions = new [] { "cshtml" };

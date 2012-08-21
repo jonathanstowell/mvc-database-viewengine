@@ -34,6 +34,11 @@ namespace databaseviewengine.Data
             return Collection.AsQueryable().SingleOrDefault(x => x.ViewName == viewName);
         }
 
+        public Page GetByDomainAndViewName(string domain, string viewName)
+        {
+            return Collection.AsQueryable().SingleOrDefault(x => x.Domain == domain && x.ViewName == viewName);
+        }
+
         public void Save(Page page)
         {
             Collection.Insert(page);
