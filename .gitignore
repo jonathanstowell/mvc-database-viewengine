@@ -28,7 +28,6 @@ obj/
 [Bb]in
 [Dd]ebug*/
 [Rr]elease*/
-[Pp]lugins
 Ankh.NoLoad
 trunk/lib/internal/
 trunk/src/ThreeBytes.Release/bin
