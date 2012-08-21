@@ -9,5 +9,6 @@ namespace databaseviewengine.Entities
         public virtual string Title { get; set; }
         public virtual string Body { get; set; }
         public virtual string ViewName { get; set; }
+        public virtual DateTime LastModifiedDateTime { get; set; }
     }
 }

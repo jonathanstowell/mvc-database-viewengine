@@ -6,24 +6,32 @@
 
 <h1>Localhost Pages</h1>
 
-<table class="table table-striped table-bordered table-condensed">
-    <thead>
-        <th>Id</th>
-        <th>Domain</th>
-        <th>Title</th>
-        <th>Body</th>
-        <th>View Name</th>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(item.Id.ToString(), "Edit", new { id = item.Id })</td>
-                <td>@item.Domain</td>
-                <td>@item.Title</td>
-                <td>@item.Body</td>
-                <td>@item.ViewName</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="span12">
+    <a href="@Url.Action("Create", "Page")" class="btn btn-primary">Create</a>
+</div>
+
+<div class="span12">
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <th>Id</th>
+            <th>Domain</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>View Name</th>
+            <th>Last Modified Date Time</th>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(item.Id.ToString(), "Edit", new { id = item.Id })</td>
+                    <td>@item.Domain</td>
+                    <td>@item.Title</td>
+                    <td>@item.Body</td>
+                    <td>@item.ViewName</td>
+                    <td>@item.LastModifiedDateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
