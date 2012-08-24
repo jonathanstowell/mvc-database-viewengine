@@ -116,7 +116,7 @@
       <DependentUpon>Precompiled.cshtml</DependentUpon>
     </Compile>
     <Compile Include="VirtualFiles\DatabaseFile.cs" />
-    <Compile Include="VirtualPathProviders\MongoVirtualPathProvider.cs" />
+    <Compile Include="VirtualPathProviders\DatabaseVirtualPathProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\bootstrap-responsive.css" />

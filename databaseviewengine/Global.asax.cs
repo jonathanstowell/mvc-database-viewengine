@@ -48,7 +48,7 @@ namespace databaseviewengine
             System.Web.Mvc.ViewEngines.Engines.Insert(1, new PreCompiledViewEngine(new Dictionary<string, WebViewPage> { { "default/Page/Precompiled", new Precompiled() } }));
             System.Web.Mvc.ViewEngines.Engines.Insert(2, new PluginViewEngine());
 
-            HostingEnvironment.RegisterVirtualPathProvider(new MongoVirtualPathProvider());
+            HostingEnvironment.RegisterVirtualPathProvider(new DatabaseVirtualPathProvider());
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

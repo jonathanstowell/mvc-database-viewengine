@@ -9,12 +9,12 @@ using databaseviewengine.VirtualFiles;
 
 namespace databaseviewengine.VirtualPathProviders
 {
-    public class MongoVirtualPathProvider : VirtualPathProvider
+    public class DatabaseVirtualPathProvider : VirtualPathProvider
     {
         private readonly PageRepository repository;
         private readonly DatabaseViewKeyProcessor viewKeyProcessor;
 
-        public MongoVirtualPathProvider()
+        public DatabaseVirtualPathProvider()
         {
             repository = new PageRepository();
             viewKeyProcessor = new DatabaseViewKeyProcessor();
