@@ -19,6 +19,7 @@
             <th>Body</th>
             <th>View Name</th>
             <th>Last Modified Date Time</th>
+            <th></th>
         </thead>
         <tbody>
             @foreach(var item in Model)
@@ -30,6 +31,7 @@
                     <td>@item.Body</td>
                     <td>@item.ViewName</td>
                     <td>@item.LastModifiedDateTime</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "Page", new { id = item.Id }, new { @class = "btn btn-danger" })</td>
                 </tr>
             }
         </tbody>

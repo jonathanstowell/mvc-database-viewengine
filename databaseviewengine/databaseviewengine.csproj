@@ -61,6 +61,7 @@
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +74,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -99,8 +104,12 @@
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestContext\ProvideRequestContext.cs" />
-    <Compile Include="ViewEngines\MongoViewEngine.cs" />
+    <Compile Include="ViewEngines\DatabaseViewEngine.cs" />
+    <Compile Include="ViewEngines\PluginViewEngine.cs" />
     <Compile Include="ViewEngines\PrecompiledView.cs" />
+    <Compile Include="ViewEngines\PreCompiledViewEngine.cs" />
+    <Compile Include="ViewKeyProcessors\DatabaseViewKeyProcessor.cs" />
+    <Compile Include="ViewKeyProcessors\PrecompiledViewKeyProcessor.cs" />
     <Compile Include="Views\default\Page\Precompiled.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

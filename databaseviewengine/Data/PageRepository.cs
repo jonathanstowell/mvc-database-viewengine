@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentMongo.Linq;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using databaseviewengine.Entities;
 
 namespace databaseviewengine.Data
@@ -47,6 +48,11 @@ namespace databaseviewengine.Data
         public void Update(Page page)
         {
             Collection.Save(page);
+        }
+
+        public void Delete(Guid id)
+        {
+            Collection.Remove(Query.EQ("_id", id));
         }
 
         public long Count()

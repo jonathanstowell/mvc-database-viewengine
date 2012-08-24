@@ -20,11 +20,11 @@ namespace databaseviewengine.Controllers
             if (repository.Count() != 0)
                 return View("Index", repository.GetAll());
 
-            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "localhost", Title = "Test 1", Body = "@model databaseviewengine.Models.TestViewModel \r\n @{ ViewBag.Title = \"Test 1\";}<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>localhost</p>", ViewName = "Page/Test1", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "default", Title = "Test 1", Body = "@model databaseviewengine.Models.TestViewModel \r\n @{ ViewBag.Title = \"Test 1\";}<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>default</p>", ViewName = "Page/Test1", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "default", Title = "Test 2", Body = "@model databaseviewengine.Models.Test2ViewModel \r\n @{ ViewBag.Title = \"Test 2\";}<h2>Test 2</h2><p>Today: @Model.Today</p><p>default</p>", ViewName = "Page/Test2", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "localhost", Title = "Test 3", Body = "@model databaseviewengine.Models.Test3ViewModel \r\n @{ ViewBag.Title = \"Test 3\";}<h2>Test 3</h2><p>Number: @Model.Number</p><p>localhost</p>", ViewName = "Page/Test3", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            //repository.Save(new Page { Id = Guid.NewGuid(), Domain = "default", Title = "Precompiled", Body = "@model databaseviewengine.Models.Test3ViewModel \r\n @{ ViewBag.Title = \"Test 3\";}<h2>Test 3</h2><p>Number: @Model.Number</p><p>localhost</p>", ViewName = "Page/Precompiled", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "localhost", Title = "Test 1", Body = "@model databaseviewengine.Models.TestViewModel \r\n @{  Layout = \"~/Views/Shared/_Layout.cshtml\"; ViewBag.Title = \"Test 1\";}<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>localhost</p>", ViewName = "Page/Test1", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "default", Title = "Test 1", Body = "@model databaseviewengine.Models.TestViewModel \r\n @{  Layout = \"~/Views/Shared/_Layout.cshtml\"; ViewBag.Title = \"Test 1\";}<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>default</p>", ViewName = "Page/Test1", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "default", Title = "Test 2", Body = "@model databaseviewengine.Models.Test2ViewModel \r\n @{  Layout = \"~/Views/Shared/_Layout.cshtml\"; ViewBag.Title = \"Test 2\";}<h2>Test 2</h2><p>Today: @Model.Today</p><p>default</p>", ViewName = "Page/Test2", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "localhost", Title = "Test 3", Body = "@model databaseviewengine.Models.Test3ViewModel \r\n @{  Layout = \"~/Views/Shared/_Layout.cshtml\"; ViewBag.Title = \"Test 3\";}<h2>Test 3</h2><p>Number: @Model.Number</p><p>localhost</p>", ViewName = "Page/Test3", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new Page { Id = Guid.NewGuid(), Domain = "default", Title = "Precompiled", Body = "@model databaseviewengine.Models.Test3ViewModel \r\n @{ Layout = \"~/Views/Shared/_Layout.cshtml\"; ViewBag.Title = \"Database Precompiled\";}<h2>Database Precompiled</h2><p>Number: @Model.Number</p><p>localhost</p>", ViewName = "Page/Precompiled", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
 
             return View("Index", repository.GetAll());
         }
@@ -67,6 +67,13 @@ namespace databaseviewengine.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Delete(string id)
+        {
+            repository.Delete(Guid.Parse(id));
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Standard()
         {
             return View();
@@ -74,7 +81,7 @@ namespace databaseviewengine.Controllers
 
         public ActionResult Precompiled()
         {
-            return View();
+            return View(new Test3ViewModel { Number = 7 });
         }
 
         public ActionResult Test1()

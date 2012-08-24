@@ -4,6 +4,7 @@ using System.Web.Caching;
 using System.Web.Hosting;
 using databaseviewengine.Data;
 using databaseviewengine.Entities;
+using databaseviewengine.ViewKeyProcessors;
 using databaseviewengine.VirtualFiles;
 
 namespace databaseviewengine.VirtualPathProviders
@@ -11,10 +12,12 @@ namespace databaseviewengine.VirtualPathProviders
     public class MongoVirtualPathProvider : VirtualPathProvider
     {
         private readonly PageRepository repository;
+        private readonly DatabaseViewKeyProcessor viewKeyProcessor;
 
         public MongoVirtualPathProvider()
         {
             repository = new PageRepository();
+            viewKeyProcessor = new DatabaseViewKeyProcessor();
         }
 
         public override bool FileExists(string virtualPath)
@@ -42,39 +45,12 @@ namespace databaseviewengine.VirtualPathProviders
         {
             string domain, pagepath;
 
-            TryParseDomainAndPagePathFromVirtualPath(virtualPath, out domain, out pagepath);
+            bool result = viewKeyProcessor.TryParseDomainAndPagePathFromVirtualPath(virtualPath, out domain, out pagepath);
 
-            return repository.GetByDomainAndViewName(domain, pagepath);
-        }
+            if (result)
+                return repository.GetByDomainAndViewName(domain, pagepath);
 
-        private void TryParseDomainAndPagePathFromVirtualPath(string virtualPath, out string domain, out string pagePath)
-        {
-            string[] breakdown = BreakdownVirtualPathIntoDomainControllerAndPage(virtualPath);
-
-            if (breakdown.Length < 3)
-            {
-                domain = string.Empty;
-                pagePath = string.Empty;
-
-                return;
-            }
-
-            domain = breakdown[0];
-            pagePath = string.Format("{0}/{1}", breakdown[1], breakdown[2]);
-        }
-
-        private string[] BreakdownVirtualPathIntoDomainControllerAndPage(string virtualPath)
-        {
-            int startIndex = virtualPath.LastIndexOf("Views/", StringComparison.Ordinal);
-
-            if (startIndex == -1)
-                return new string[0];
-
-            string sub = virtualPath.Replace(".cshtml", "");
-
-            sub = sub.Substring(startIndex + 6, sub.Length - (startIndex + 6));
-
-            return sub.Split('/');
+            return null;
         }
     }
 }

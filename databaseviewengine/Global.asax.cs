@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Web.Razor;
 using System.Web.Routing;
+using System.Web.WebPages;
 using databaseviewengine.ViewEngines;
 using databaseviewengine.Views.@default.Page;
 using databaseviewengine.VirtualPathProviders;
@@ -37,10 +40,20 @@ namespace databaseviewengine
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
+            RazorCodeLanguage.Languages.Add("dbhtml", new CSharpRazorCodeLanguage());
+            WebPageHttpHandler.RegisterExtension("dbhtml");
+
             System.Web.Mvc.ViewEngines.Engines.Clear();
-            System.Web.Mvc.ViewEngines.Engines.Insert(0, new MongoViewEngine(new Dictionary<string, WebViewPage> { { "default/Page/Precompiled", new Precompiled() } }));
+            System.Web.Mvc.ViewEngines.Engines.Insert(0, new DatabaseViewEngine());
+            System.Web.Mvc.ViewEngines.Engines.Insert(1, new PreCompiledViewEngine(new Dictionary<string, WebViewPage> { { "default/Page/Precompiled", new Precompiled() } }));
+            System.Web.Mvc.ViewEngines.Engines.Insert(2, new PluginViewEngine());
 
             HostingEnvironment.RegisterVirtualPathProvider(new MongoVirtualPathProvider());
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+
         }
     }
 }
