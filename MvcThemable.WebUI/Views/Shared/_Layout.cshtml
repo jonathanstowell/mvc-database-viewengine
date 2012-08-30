@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+    <link href="@Url.Content("~/css/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/bootstrap-responsive.css")" rel="stylesheet" type="text/css" />
+    
+    <script type="text/javascript" src="@Url.Content("~/js/bootstrap.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/knockout.js")"></script>
+
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+</head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="@Url.Action("Index", "Page")">MVC Database Views</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li>@Html.ActionLink("Init", "Init", "Page")</li>
+                  <li>@Html.ActionLink("Test 1", "Test1", "Page")</li>
+                  <li>@Html.ActionLink("Test 2", "Test2", "Page")</li>
+                  <li>@Html.ActionLink("Test 3", "Test3", "Page")</li>
+                  <li>@Html.ActionLink("Standard View", "Standard", "Page")</li>
+                  <li>@Html.ActionLink("Precompiled View", "Precompiled", "Page")</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </body>
+</html>

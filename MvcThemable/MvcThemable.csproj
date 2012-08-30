@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E217C50C-F621-4C4D-849C-EAA226031205}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MvcThemable</RootNamespace>
+    <AssemblyName>MvcThemable</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\Abstract\IDatabaseViewRepository.cs" />
+    <Compile Include="Data\Concrete\DatabaseViewRepository.cs" />
+    <Compile Include="Entities\Abstract\IDatabaseView.cs" />
+    <Compile Include="Entities\Concrete\DatabaseView.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\Abstract\IProvideCurrentRequestContext.cs" />
+    <Compile Include="Request\Concrete\ProvideRequestContext.cs" />
+    <Compile Include="ViewPipeline\ViewEngines\Concrete\RazorDatabaseViewEngine.cs" />
+    <Compile Include="ViewPipeline\ViewKeyProcessors\Abstract\IViewKeyProcessor.cs" />
+    <Compile Include="ViewPipeline\ViewKeyProcessors\Concrete\ViewKeyProcessor.cs" />
+    <Compile Include="ViewPipeline\ViewLocations\Abstract\IProvideViewLocations.cs" />
+    <Compile Include="ViewPipeline\ViewEngines\Abstract\IUrlThemableViewEngine.cs" />
+    <Compile Include="ViewPipeline\ViewEngines\Concrete\RazorPluginViewEngine.cs" />
+    <Compile Include="ViewPipeline\Views\PrecompiledView.cs" />
+    <Compile Include="ViewPipeline\ViewEngines\Concrete\RazorPreCompiledViewEngine.cs" />
+    <Compile Include="ViewPipeline\ViewLocations\Concrete\ProvideViewLocations.cs" />
+    <Compile Include="ViewPipeline\VirtualFiles\DatabaseFile.cs" />
+    <Compile Include="ViewPipeline\VirtualPathProviders\DatabaseVirtualPathProvider.cs" />
+    <Compile Include="Views\Models\Abstract\IProvideViewModels.cs" />
+    <Compile Include="Views\Models\Concrete\ProvideViewModels.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,43 @@
+﻿﻿@model IEnumerable<MvcThemable.Entities.Concrete.DatabaseView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Localhost Pages</h1>
+
+<div class="span12">
+    <a href="@Url.Action("Create", "Page")" class="btn btn-primary">Create</a>
+</div>
+
+<div class="span12">
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <th>Id</th>
+            <th>View Key</th>
+            <th>Domain</th>
+            <th>Controller</th>
+            <th>Action</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Last Modified Date Time</th>
+            <th></th>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(item.Id.ToString(), "Edit", new { id = item.Id })</td>
+                    <td>@item.ViewKey</td>
+                    <td>@item.Domain</td>
+                    <td>@item.Controller</td>
+                    <td>@item.Action</td>
+                    <td>@item.Title</td>
+                    <td>@item.Body</td>
+                    <td>@item.LastModifiedDateTime</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "Page", new { id = item.Id }, new { @class = "btn btn-danger" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

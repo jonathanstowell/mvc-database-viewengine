@@ -1,0 +1,68 @@
+﻿@model MvcThemable.Entities.Concrete.DatabaseView
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Default Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Page</legend>
+
+        @Html.HiddenFor(model => model.Id)
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ViewKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ViewKey)
+            @Html.ValidationMessageFor(model => model.ViewKey)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Domain)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Domain)
+            @Html.ValidationMessageFor(model => model.Domain)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Controller)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Controller)
+            @Html.ValidationMessageFor(model => model.Controller)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Action)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Action)
+            @Html.ValidationMessageFor(model => model.Action)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Body)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Body, new { @cols = 160, @rows = 10 })
+            @Html.ValidationMessageFor(model => model.Body)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}

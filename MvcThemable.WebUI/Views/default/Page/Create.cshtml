@@ -1,0 +1,74 @@
+﻿@model MvcThemable.WebUI.Models.DatabaseViewCreationViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Page</legend>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ViewModels)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.DatabaseView.ViewModel, new SelectList(Model.ViewModels, "Value", "Text", Model.DatabaseView.ViewModel), "-- Select View Model --")
+            @Html.ValidationMessageFor(model => model.ViewModels)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DatabaseView.ViewKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DatabaseView.ViewKey)
+            @Html.ValidationMessageFor(model => model.DatabaseView.ViewKey)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DatabaseView.Domain)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DatabaseView.Domain)
+            @Html.ValidationMessageFor(model => model.DatabaseView.Domain)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DatabaseView.Controller)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DatabaseView.Controller)
+            @Html.ValidationMessageFor(model => model.DatabaseView.Controller)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DatabaseView.Action)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DatabaseView.Action)
+            @Html.ValidationMessageFor(model => model.DatabaseView.Action)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DatabaseView.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DatabaseView.Title)
+            @Html.ValidationMessageFor(model => model.DatabaseView.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DatabaseView.Body)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DatabaseView.Body)
+            @Html.ValidationMessageFor(model => model.DatabaseView.Body)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
