@@ -6,9 +6,16 @@
 
     <link href="@Url.Content("~/css/bootstrap.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/css/bootstrap-responsive.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/style.css")" rel="stylesheet" type="text/css" />
     
-    <script type="text/javascript" src="@Url.Content("~/js/bootstrap.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/js/knockout.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/libs/jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/libs/bootstrap.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/libs/knockout.js")"></script>
+    <script>
+        var viewModel = "@Model.GetType().AssemblyQualifiedName"";
+        var controller = "@ViewContext.RouteData.GetRequiredString("controller")";
+        var action = "@ViewContext.RouteData.GetRequiredString("action")";
+    </script>
 
     <style>
       body {
@@ -18,6 +25,9 @@
 </head>
 
     <body>
+        <ul id="navigation">
+            <li class="edit"><a href="" title="edit"></a></li>
+        </ul>
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
@@ -43,5 +53,20 @@
         <div class="container">
             @RenderBody()
         </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#navigation a').stop().animate({ 'marginLeft': '-85px' }, 1000);
+
+                $('#navigation > li').hover(
+                    function () {
+                        $('a', $(this)).stop().animate({ 'marginLeft': '-2px' }, 200);
+                    },
+                    function () {
+                        $('a', $(this)).stop().animate({ 'marginLeft': '-85px' }, 200);
+                    }
+                );
+            });
+        </script>
     </body>
 </html>

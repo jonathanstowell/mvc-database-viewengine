@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using MvcThemable.Data.Concrete;
 using MvcThemable.Entities.Concrete;
@@ -117,7 +115,12 @@ namespace MvcThemable.WebUI.Controllers
 
         public JsonResult GetViewModelProperties(string fullClassName)
         {
-            return Json(provideViewModels.GetModelProperties(fullClassName).ToSelectList());
+            var properties = provideViewModels.GetModelProperties(fullClassName);
+
+            if (properties != null)
+                return Json(properties.ToSelectList(), JsonRequestBehavior.AllowGet);
+
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

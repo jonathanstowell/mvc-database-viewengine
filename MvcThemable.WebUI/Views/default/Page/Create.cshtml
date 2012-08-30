@@ -6,17 +6,27 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+<form id="create-databaseview-form" action="@Url.Action("Create", "Page")" method="post">
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Page</legend>
         
         <div class="editor-label">
-            @Html.LabelFor(model => model.ViewModels)
+            @Html.LabelFor(model => model.DatabaseView.ViewModel)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.DatabaseView.ViewModel, new SelectList(Model.ViewModels, "Value", "Text", Model.DatabaseView.ViewModel), "-- Select View Model --")
+            @Html.DropDownListFor(model => model.DatabaseView.ViewModel, new SelectList(Model.ViewModels, "Value", "Text", Model.DatabaseView.ViewModel), "-- Select View Model --", new { data_bind = "value: ViewModel" })
             @Html.ValidationMessageFor(model => model.ViewModels)
+        </div>
+
+        <div data-bind="visible: ViewModelProperties().length > 0">
+            <div class="editor-label">
+                <label for="ViewModelProperties">View Model Properties</label>
+            </div>
+            <div class="editor-field">
+                <select id="ViewModelProperties" data-bind="options: ViewModelProperties, optionsText: 'Value', value: ViewModelProperty, optionsCaption: 'Choose...'"></select>
+                <button data-bind="click: InsertIntoBody" class="btn btn-primary">Insert</button>
+            </div>
         </div>
 
         <div class="editor-label">
@@ -63,7 +73,7 @@
             @Html.LabelFor(model => model.DatabaseView.Body)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DatabaseView.Body)
+            @Html.TextBoxFor(model => model.DatabaseView.Body, new { data_bind = "value: Body" })
             @Html.ValidationMessageFor(model => model.DatabaseView.Body)
         </div>
 
@@ -71,4 +81,37 @@
             <input type="submit" value="Create" class="btn btn-primary" />
         </p>
     </fieldset>
-}
+</form>
+
+<script>
+    var database_view_creation   = {};
+
+    (function (index) {
+
+        database_view_creation = index;
+
+        index.Body = ko.observable("");
+        index.ViewModel = ko.observable();
+        index.ViewModelProperty = ko.observable();
+        index.ViewModelProperties = ko.observableArray([]);
+
+        index.ViewModel.subscribe(function(newValue) {
+            index.ViewModelProperties.removeAll();
+            
+            jQuery.get("@Url.Action("GetViewModelProperties", "Page")", { "fullClassName": newValue }, function(data) {
+                jQuery.each(data, function(key, val) {
+                    index.ViewModelProperties.push(val);
+                });
+            });
+        });
+
+        index.InsertIntoBody = function() {
+            index.Body(index.Body() + "@@Model." + index.ViewModelProperty().Value);
+        };
+
+        jQuery(function () {
+            ko.applyBindings(index, jQuery('#create-databaseview-form')[0]);
+        });
+        
+    }(database_view_creation));
+</script>

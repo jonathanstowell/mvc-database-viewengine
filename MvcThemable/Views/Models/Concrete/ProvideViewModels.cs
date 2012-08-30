@@ -19,7 +19,7 @@ namespace MvcThemable.Views.Models.Concrete
             {
                 foreach (var ns in namespaces)
                 {
-                    models.AddRange(assembly.GetTypes().Where(a => string.Equals(a.Namespace, ns, StringComparison.Ordinal)).Select(a => new { a.FullName, a.Name }).ToDictionary(a => a.FullName, a => a.Name));
+                    models.AddRange(assembly.GetTypes().Where(a => string.Equals(a.Namespace, ns, StringComparison.Ordinal)).Select(a => new { a.AssemblyQualifiedName, a.Name }).ToDictionary(a => a.AssemblyQualifiedName, a => a.Name));
                 }
             }
 
