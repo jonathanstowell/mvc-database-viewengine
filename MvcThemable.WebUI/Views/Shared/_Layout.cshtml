@@ -11,10 +11,27 @@
     <script type="text/javascript" src="@Url.Content("~/js/libs/jquery.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/js/libs/bootstrap.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/js/libs/knockout.js")"></script>
-    <script>
-        var databaseComponents = new Array();
-    </script>
+    <script type="text/javascript" src="@Url.Content("~/js/libs/tiny_mce/tiny_mce.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/libs/tiny_mce/jquery.tinymce.js")"></script>
+    <script type="text/javascript">
+        jQuery().ready(function () {
+            jQuery('textarea.tinymce').tinymce({
+                // Location of TinyMCE script
+                script_url: '@Url.Content("~/js/libs/tiny_mce/jquery.tinymce.js")',
 
+                // General options
+                mode : "textareas",
+                theme : "simple",
+                plugins: "xhtmlxtras",
+
+                // Example content CSS (should be your site CSS)
+                content_css: "css/content.css",
+                
+                width: "525",
+                height: "330"
+            });
+        });
+</script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -23,9 +40,6 @@
 </head>
 
     <body>
-        <ul id="navigation">
-            <li class="edit"><a href="" title="edit"></a></li>
-        </ul>
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
@@ -58,26 +72,14 @@
                 <h3>Edit Database View</h3>
             </div>
             <div class="modal-body">
-                <textarea data-bind="value: Body"></textarea>
+                <textarea id="edit-databaseview-body" class="tinymce" data-bind="value: Body"></textarea>
                 
                 <button data-bind="click: submit" class="btn btn-primary">Save</button>
             </div>
         </div>
 
         <script type="text/javascript">
-            jQuery(function () {
-                jQuery('#navigation a').stop().animate({ 'marginLeft': '-85px' }, 1000);
-
-                jQuery('#navigation > li').hover(
-                    function () {
-                        jQuery('a', $(this)).stop().animate({ 'marginLeft': '-2px' }, 200);
-                    },
-                    function () {
-                        jQuery('a', $(this)).stop().animate({ 'marginLeft': '-85px' }, 200);
-                    }
-                );
-            });
-
+            
             var database_view_components_model = {};
 
             (function (index) {
@@ -87,7 +89,7 @@
                 index.Body = ko.observable();
 
                 index.submit = function() {
-                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "body": index.Body() }, function(data) {
+                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "body": tinyMCE.get('edit-databaseview-body').getContent() }, function (data) {
                         index.editModal.modal('hide');
                     });
                 };
@@ -100,6 +102,8 @@
                     jQuery.get("@Url.Action("Get", "Page")", { "controller": controller, "controllerAction": action }, function(data) {
                         index.ViewKey(data.ViewKey);
                         index.Body(data.Body);
+                        
+                        jQuery('#edit-databaseview-body').tinymce().execCommand('mceInsertContent', false, index.Body());
                         
                         index.editModal.modal('show');
                     });

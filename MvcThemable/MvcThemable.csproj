@@ -61,6 +61,7 @@
     <Compile Include="ViewPipeline\ViewEngines\Concrete\RazorDatabaseViewEngine.cs" />
     <Compile Include="ViewPipeline\ViewKeyProcessors\Abstract\IViewKeyProcessor.cs" />
     <Compile Include="ViewPipeline\ViewKeyProcessors\Concrete\ViewKeyProcessor.cs" />
+    <Compile Include="ViewPipeline\ViewLocationCache\NullViewLocationCache.cs" />
     <Compile Include="ViewPipeline\ViewLocations\Abstract\IProvideViewLocations.cs" />
     <Compile Include="ViewPipeline\ViewEngines\Abstract\IUrlThemableViewEngine.cs" />
     <Compile Include="ViewPipeline\ViewEngines\Concrete\RazorPluginViewEngine.cs" />

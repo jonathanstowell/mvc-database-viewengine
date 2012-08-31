@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
+using MvcThemable.ViewPipeline.ViewLocationCache;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
 using MvcThemable.ViewPipeline.ViewLocations.Concrete;
 
@@ -19,6 +20,8 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
             this.viewLocations = viewLocations;
 
             FileExtensions = new[] { "cshtml" };
+
+            ViewLocationCache = new NullViewLocationCache();
         }
 
         public void SetViewLocations()

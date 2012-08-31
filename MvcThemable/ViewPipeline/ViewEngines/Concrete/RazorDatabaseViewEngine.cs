@@ -4,6 +4,7 @@ using MvcThemable.Data.Concrete;
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
+using MvcThemable.ViewPipeline.ViewLocationCache;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
 using MvcThemable.ViewPipeline.ViewLocations.Concrete;
 
@@ -32,6 +33,8 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
             this.repository = repository;
 
             FileExtensions = new[] { "dbhtml" };
+
+            ViewLocationCache = new NullViewLocationCache();
         }
 
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)

@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
+using MvcThemable.ViewPipeline.ViewLocationCache;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
 using MvcThemable.ViewPipeline.ViewLocations.Concrete;
 using MvcThemable.ViewPipeline.Views;
@@ -28,6 +29,8 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
             this.viewKeyProcessor = viewKeyProcessor;
 
             FileExtensions = new[] { "cshtml" };
+
+            ViewLocationCache = new NullViewLocationCache();
         }
 
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)

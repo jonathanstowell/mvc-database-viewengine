@@ -33,7 +33,3 @@ ul#navigation li a {
 ul#navigation .edit a    {
     background-image: url(../img/edit.png);
 }
-#edit-databaseview-modal textarea {
-    width: 98%;
-    height: 300px;
-}
