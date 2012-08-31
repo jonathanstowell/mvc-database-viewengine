@@ -12,9 +12,7 @@
     <script type="text/javascript" src="@Url.Content("~/js/libs/bootstrap.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/js/libs/knockout.js")"></script>
     <script>
-        var viewModel = "@Model.GetType().AssemblyQualifiedName"";
-        var controller = "@ViewContext.RouteData.GetRequiredString("controller")";
-        var action = "@ViewContext.RouteData.GetRequiredString("action")";
+        var databaseComponents = new Array();
     </script>
 
     <style>
@@ -53,20 +51,66 @@
         <div class="container">
             @RenderBody()
         </div>
+        
+        <div id="edit-databaseview-modal" class="modal hide fade">
+            <div class="modal-header">
+                <a href="#" class="close" data-bind="click: raiseClose">×</a>
+                <h3>Edit Database View</h3>
+            </div>
+            <div class="modal-body">
+                <textarea data-bind="value: Body"></textarea>
+                
+                <button data-bind="click: submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
 
         <script type="text/javascript">
-            $(function () {
-                $('#navigation a').stop().animate({ 'marginLeft': '-85px' }, 1000);
+            jQuery(function () {
+                jQuery('#navigation a').stop().animate({ 'marginLeft': '-85px' }, 1000);
 
-                $('#navigation > li').hover(
+                jQuery('#navigation > li').hover(
                     function () {
-                        $('a', $(this)).stop().animate({ 'marginLeft': '-2px' }, 200);
+                        jQuery('a', $(this)).stop().animate({ 'marginLeft': '-2px' }, 200);
                     },
                     function () {
-                        $('a', $(this)).stop().animate({ 'marginLeft': '-85px' }, 200);
+                        jQuery('a', $(this)).stop().animate({ 'marginLeft': '-85px' }, 200);
                     }
                 );
             });
+
+            var database_view_components_model = {};
+
+            (function (index) {
+                database_view_components_model = index;
+
+                index.ViewKey = ko.observable();
+                index.Body = ko.observable();
+
+                index.submit = function() {
+                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "body": index.Body() }, function(data) {
+                        index.editModal.modal('hide');
+                    });
+                };
+                
+                index.raiseClose = function () {
+                    index.editModal.modal('hide');
+                };
+
+                jQuery(document).bind('editDatabaseComponent', function (e, viewModel, controller, action) {
+                    jQuery.get("@Url.Action("Get", "Page")", { "controller": controller, "controllerAction": action }, function(data) {
+                        index.ViewKey(data.ViewKey);
+                        index.Body(data.Body);
+                        
+                        index.editModal.modal('show');
+                    });
+                });
+
+                jQuery(function() {
+                    ko.applyBindings(index, jQuery("edit-databaseview-modal")[0]);
+                    index.editModal = jQuery('#edit-databaseview-modal').modal({ backdrop: true, closeOnEscape: true, modal: true, show: false });
+                });
+
+            } (database_view_components_model));
         </script>
     </body>
 </html>

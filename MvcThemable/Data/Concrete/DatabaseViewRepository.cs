@@ -5,7 +5,6 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using MvcThemable.Data.Abstract;
-using MvcThemable.Entities.Abstract;
 using MvcThemable.Entities.Concrete;
 
 namespace MvcThemable.Data.Concrete
@@ -32,7 +31,7 @@ namespace MvcThemable.Data.Concrete
             return Collection.AsQueryable().SingleOrDefault(x => x.Id == id);
         }
 
-        public IDatabaseView GetByViewKey(string key)
+        public DatabaseView GetByViewKey(string key)
         {
             return Collection.AsQueryable().SingleOrDefault(x => x.ViewKey == key);
         }

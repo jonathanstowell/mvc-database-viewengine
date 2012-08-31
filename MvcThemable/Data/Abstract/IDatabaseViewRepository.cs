@@ -1,9 +1,9 @@
-﻿using MvcThemable.Entities.Abstract;
+﻿using MvcThemable.Entities.Concrete;
 
 namespace MvcThemable.Data.Abstract
 {
     public interface IDatabaseViewRepository
     {
-        IDatabaseView GetByViewKey(string key);
+        DatabaseView GetByViewKey(string key);
     }
 }

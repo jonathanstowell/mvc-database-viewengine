@@ -16,7 +16,7 @@ namespace MvcThemable.ViewPipeline.VirtualFiles
 
         public override Stream Open()
         {
-            return new MemoryStream(new ASCIIEncoding().GetBytes(content), false);
+            return new MemoryStream(new ASCIIEncoding().GetBytes(content + "<button class=\"btn btn-primary\" onclick=\"jQuery(document).trigger('editDatabaseComponent', [ '@Model.GetType().AssemblyQualifiedName', '@ViewContext.RouteData.GetRequiredString(\"controller\")', '@ViewContext.RouteData.GetRequiredString(\"action\")' ])\">Edit</button>"), false);
         }
     }
 }

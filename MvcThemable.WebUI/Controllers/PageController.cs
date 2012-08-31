@@ -3,6 +3,10 @@ using System.Web.Mvc;
 using MvcThemable.Data.Concrete;
 using MvcThemable.Entities.Concrete;
 using MvcThemable.Extensions;
+using MvcThemable.Request.Abstract;
+using MvcThemable.Request.Concrete;
+using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
+using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
 using MvcThemable.Views.Models.Abstract;
 using MvcThemable.Views.Models.Concrete;
 using MvcThemable.WebUI.Models;
@@ -13,15 +17,19 @@ namespace MvcThemable.WebUI.Controllers
     {
         private readonly DatabaseViewRepository repository;
         private readonly IProvideViewModels provideViewModels;
+        private readonly IViewKeyProcessor viewKeyProcessor;
+        private readonly IProvideCurrentRequestContext currentRequestContext;
 
         public PageController()
-            : this(new DatabaseViewRepository(), new ProvideViewModels())
+            : this(new DatabaseViewRepository(), new ProvideViewModels(), new ViewKeyProcessor(), new ProvideRequestContext())
         {}
 
-        public PageController(DatabaseViewRepository repository, IProvideViewModels provideViewModels)
+        public PageController(DatabaseViewRepository repository, IProvideViewModels provideViewModels, IViewKeyProcessor viewKeyProcessor, IProvideCurrentRequestContext currentRequestContext)
         {
             this.repository = repository;
             this.provideViewModels = provideViewModels;
+            this.viewKeyProcessor = viewKeyProcessor;
+            this.currentRequestContext = currentRequestContext;
         }
 
         public ActionResult Init()
@@ -81,6 +89,19 @@ namespace MvcThemable.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Update(string viewKey, string body)
+        {
+            var view = repository.GetByViewKey(viewKey);
+
+            view.Body = body;
+
+            repository.Update(view);
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Delete(string id)
         {
             repository.Delete(Guid.Parse(id));
@@ -113,14 +134,19 @@ namespace MvcThemable.WebUI.Controllers
             return View(new Test3ViewModel { Number = 7 });
         }
 
+        public JsonResult Get(string controller, string controllerAction)
+        {
+            var view = repository.GetByViewKey(viewKeyProcessor.Generate(currentRequestContext.CurrentHost, controller, controllerAction));
+
+            if (view == null)
+                view = repository.GetByViewKey(viewKeyProcessor.Generate("default", controller, controllerAction));
+
+            return Json(view, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetViewModelProperties(string fullClassName)
         {
-            var properties = provideViewModels.GetModelProperties(fullClassName);
-
-            if (properties != null)
-                return Json(properties.ToSelectList(), JsonRequestBehavior.AllowGet);
-
-            return Json(null, JsonRequestBehavior.AllowGet);
+            return Json(provideViewModels.GetModelProperties(fullClassName), JsonRequestBehavior.AllowGet);
         }
     }
 }

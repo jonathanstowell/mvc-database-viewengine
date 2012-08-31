@@ -40,12 +40,7 @@ namespace MvcThemable.ViewPipeline.VirtualPathProviders
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            if (FindPage(virtualPath) != null)
-            {
-                return null;
-            }
-
-            return Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
+            return null;
         }
 
         protected IDatabaseView FindPage(string virtualPath)
