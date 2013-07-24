@@ -2,7 +2,6 @@
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
 using MvcThemable.ViewPipeline.ViewLocationCache;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
-using MvcThemable.ViewPipeline.ViewLocations.Concrete;
 
 namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
 {
@@ -11,13 +10,13 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
         private readonly IProvideViewLocations viewLocations;
 
         public RazorPluginViewEngine()
-            : this(null, new ProvideViewLocations())
+            : this(null)
         {}
 
-        public RazorPluginViewEngine(IViewPageActivator viewPageActivator, IProvideViewLocations viewLocations)
+        public RazorPluginViewEngine(IViewPageActivator viewPageActivator)
             : base(viewPageActivator)
         {
-            this.viewLocations = viewLocations;
+            viewLocations = DependencyResolver.Current.GetService<IProvideViewLocations>();
 
             FileExtensions = new[] { "cshtml" };
 

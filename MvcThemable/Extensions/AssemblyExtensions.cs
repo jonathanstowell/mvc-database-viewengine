@@ -52,6 +52,7 @@ namespace MvcThemable.Extensions
             {
                 timestamp = fallback;
             }
+
             return timestamp;
         }
     }

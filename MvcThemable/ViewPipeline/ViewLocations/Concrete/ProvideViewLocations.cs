@@ -1,21 +1,18 @@
 using System.Collections.Generic;
 using MvcThemable.Request.Abstract;
-using MvcThemable.Request.Concrete;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
 
 namespace MvcThemable.ViewPipeline.ViewLocations.Concrete
 {
+    using System.Web.Mvc;
+
     public class ProvideViewLocations : IProvideViewLocations
     {
         private readonly IProvideCurrentRequestContext currentRequestContext;
 
         public ProvideViewLocations()
-            : this(new ProvideRequestContext())
-        {}
-
-        public ProvideViewLocations(IProvideCurrentRequestContext currentRequestContext)
         {
-            this.currentRequestContext = currentRequestContext;
+            currentRequestContext = DependencyResolver.Current.GetService<IProvideCurrentRequestContext>();
         }
 
         public string[] ViewLocations(params string[] extensions)

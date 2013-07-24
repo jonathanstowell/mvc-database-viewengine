@@ -48,7 +48,7 @@ namespace MvcThemable.WebUI.Controllers
 
         public ActionResult Index()
         {
-            return View(repository.GetAll());
+            return View();
         }
 
         public ActionResult Create()

@@ -1,12 +1,9 @@
 ﻿using System.Web.Mvc;
 using MvcThemable.Data.Abstract;
-using MvcThemable.Data.Concrete;
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
-using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
 using MvcThemable.ViewPipeline.ViewLocationCache;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
-using MvcThemable.ViewPipeline.ViewLocations.Concrete;
 
 namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
 {
@@ -22,15 +19,11 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
         {}
 
         public RazorDatabaseViewEngine(IViewPageActivator viewPageActivator)
-            : this(viewPageActivator, new ProvideViewLocations(), new ViewKeyProcessor(), new DatabaseViewRepository())
-        {}
-
-        public RazorDatabaseViewEngine(IViewPageActivator viewPageActivator, IProvideViewLocations viewLocations, IViewKeyProcessor viewKeyProcessor, IDatabaseViewRepository repository)
             : base(viewPageActivator)
         {
-            this.viewLocations = viewLocations;
-            this.viewKeyProcessor = viewKeyProcessor;
-            this.repository = repository;
+            viewLocations = DependencyResolver.Current.GetService<IProvideViewLocations>();
+            viewKeyProcessor = DependencyResolver.Current.GetService<IViewKeyProcessor>();
+            repository = DependencyResolver.Current.GetService<IDatabaseViewRepository>();
 
             FileExtensions = new[] { "dbhtml" };
 

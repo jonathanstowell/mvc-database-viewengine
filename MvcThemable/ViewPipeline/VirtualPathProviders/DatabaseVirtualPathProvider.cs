@@ -11,20 +11,17 @@ using MvcThemable.ViewPipeline.VirtualFiles;
 
 namespace MvcThemable.ViewPipeline.VirtualPathProviders
 {
+    using System.Web.Mvc;
+
     public class DatabaseVirtualPathProvider : VirtualPathProvider
     {
         private readonly IViewKeyProcessor viewKeyProcessor;
-
         private readonly IDatabaseViewRepository repository;
 
         public DatabaseVirtualPathProvider()
-            : this(new ViewKeyProcessor(), new DatabaseViewRepository())
-        {}
-
-        public DatabaseVirtualPathProvider(IViewKeyProcessor viewKeyProcessor, IDatabaseViewRepository repository)
         {
-            this.viewKeyProcessor = viewKeyProcessor;
-            this.repository = repository;
+            viewKeyProcessor = DependencyResolver.Current.GetService<IViewKeyProcessor>();
+            repository = DependencyResolver.Current.GetService<IDatabaseViewRepository>();
         }
 
         public override bool FileExists(string virtualPath)

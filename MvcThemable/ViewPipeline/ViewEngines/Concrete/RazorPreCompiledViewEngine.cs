@@ -2,10 +2,8 @@
 using System.Web.Mvc;
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
-using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
 using MvcThemable.ViewPipeline.ViewLocationCache;
 using MvcThemable.ViewPipeline.ViewLocations.Abstract;
-using MvcThemable.ViewPipeline.ViewLocations.Concrete;
 using MvcThemable.ViewPipeline.Views;
 
 namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
@@ -17,16 +15,11 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
         private readonly IViewKeyProcessor viewKeyProcessor;
 
         public RazorPreCompiledViewEngine(IDictionary<string, WebViewPage> precompiledViews)
-            : this(precompiledViews, new ProvideViewLocations(), new ViewKeyProcessor())
-        {
-        }
-
-        public RazorPreCompiledViewEngine(IDictionary<string, WebViewPage> precompiledViews, IProvideViewLocations viewLocations, IViewKeyProcessor viewKeyProcessor)
         {
             this.precompiledViews = precompiledViews;
 
-            this.viewLocations = viewLocations;
-            this.viewKeyProcessor = viewKeyProcessor;
+            viewLocations = DependencyResolver.Current.GetService<IProvideViewLocations>();
+            viewKeyProcessor = DependencyResolver.Current.GetService<IViewKeyProcessor>();
 
             FileExtensions = new[] { "cshtml" };
 
