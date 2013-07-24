@@ -3,10 +3,8 @@ using System.Collections;
 using System.Web.Caching;
 using System.Web.Hosting;
 using MvcThemable.Data.Abstract;
-using MvcThemable.Data.Concrete;
 using MvcThemable.Entities.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
-using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
 using MvcThemable.ViewPipeline.VirtualFiles;
 
 namespace MvcThemable.ViewPipeline.VirtualPathProviders
@@ -37,7 +35,14 @@ namespace MvcThemable.ViewPipeline.VirtualPathProviders
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            return null;
+            var view = GetFile(virtualPath);
+
+            if (view is DatabaseFile)
+            {
+                return new DatabaseFileCacheDependency(DateTime.Now);
+            }
+
+            return Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
         }
 
         protected IDatabaseView FindPage(string virtualPath)

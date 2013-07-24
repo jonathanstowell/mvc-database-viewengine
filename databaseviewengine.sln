@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemable", "MvcThemable\MvcThemable.csproj", "{E217C50C-F621-4C4D-849C-EAA226031205}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemable.WebUI", "MvcThemable.WebUI\MvcThemable.WebUI.csproj", "{675276D5-54FB-4633-8B18-BA0AE3A88245}"
@@ -8,6 +8,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemable.Tests", "MvcThemable.Tests\MvcThemable.Tests.csproj", "{0FC82E96-B27D-4F5B-A07D-629224A77AF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemable.Core", "MvcThemable.Core\MvcThemable.Core.csproj", "{A40D8C99-1E44-47B1-A6E1-E201C13BFFA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{17384C17-2CF6-4F3F-92EB-E06A2A547DF3}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

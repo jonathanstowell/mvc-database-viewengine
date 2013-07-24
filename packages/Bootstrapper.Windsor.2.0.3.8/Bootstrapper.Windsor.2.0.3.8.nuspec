@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Bootstrapper.Windsor</id>
+    <version>2.0.3.8</version>
+    <title>Bootstrapper.Windsor</title>
+    <authors>Luis Bocaletti</authors>
+    <owners>Luis Bocaletti</owners>
+    <licenseUrl>http://bootstrapper.codeplex.com/license</licenseUrl>
+    <projectUrl>http://bootstrapper.codeplex.com/</projectUrl>
+    <iconUrl>http://i3.codeplex.com/Download?ProjectName=bootstrapper&amp;DownloadId=289179</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windsor Extension for Bootstrapper</description>
+    <summary>Windsor extension for Bootstrapper</summary>
+    <releaseNotes />
+    <copyright />
+    <language>en-us</language>
+    <dependencies>
+      <dependency id="Bootstrapper" version="2.0.3.7" />
+      <dependency id="Castle.Core" version="3.2.0" />
+      <dependency id="Castle.FactorySupportFacility" version="3.2.0" />
+      <dependency id="Castle.Windsor" version="3.2.0" />
+      <dependency id="CommonServiceLocator" version="1.0" />
+      <dependency id="CommonServiceLocator.WindsorAdapter.Unofficial" version="3.2.0.0" />
+      <dependency id="NuGet.PackageNPublish" version="0.6.0.1" />
+    </dependencies>
+  </metadata>
+</package>

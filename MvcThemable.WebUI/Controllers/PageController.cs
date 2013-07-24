@@ -1,30 +1,23 @@
 ﻿using System;
 using System.Web.Mvc;
-using MvcThemable.Data.Concrete;
+using MvcThemable.Data.Abstract;
 using MvcThemable.Entities.Concrete;
 using MvcThemable.Extensions;
 using MvcThemable.Request.Abstract;
-using MvcThemable.Request.Concrete;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
-using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
 using MvcThemable.Views.Models.Abstract;
-using MvcThemable.Views.Models.Concrete;
 using MvcThemable.WebUI.Models;
 
 namespace MvcThemable.WebUI.Controllers
 {
     public class PageController : Controller
     {
-        private readonly DatabaseViewRepository repository;
+        private readonly IDatabaseViewRepository repository;
         private readonly IProvideViewModels provideViewModels;
         private readonly IViewKeyProcessor viewKeyProcessor;
         private readonly IProvideCurrentRequestContext currentRequestContext;
 
-        public PageController()
-            : this(new DatabaseViewRepository(), new ProvideViewModels(), new ViewKeyProcessor(), new ProvideRequestContext())
-        {}
-
-        public PageController(DatabaseViewRepository repository, IProvideViewModels provideViewModels, IViewKeyProcessor viewKeyProcessor, IProvideCurrentRequestContext currentRequestContext)
+        public PageController(IDatabaseViewRepository repository, IProvideViewModels provideViewModels, IViewKeyProcessor viewKeyProcessor, IProvideCurrentRequestContext currentRequestContext)
         {
             this.repository = repository;
             this.provideViewModels = provideViewModels;
@@ -48,7 +41,7 @@ namespace MvcThemable.WebUI.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(repository.GetAll());
         }
 
         public ActionResult Create()

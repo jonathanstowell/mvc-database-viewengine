@@ -34,12 +34,6 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -53,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Abstract\IDatabaseViewRepository.cs" />
-    <Compile Include="Data\Concrete\DatabaseViewRepository.cs" />
     <Compile Include="Entities\Abstract\IDatabaseView.cs" />
     <Compile Include="Entities\Concrete\DatabaseView.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />

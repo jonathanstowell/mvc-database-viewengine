@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Castle.Windsor;
 
 namespace MvcThemable.Core.DependencyResolver
 {
-    using Castle.Windsor;
-
     public class WindsorDependencyResolver : IDependencyResolver
     {
         private readonly IWindsorContainer container;
