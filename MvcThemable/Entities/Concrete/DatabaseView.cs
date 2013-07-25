@@ -8,6 +8,7 @@ namespace MvcThemable.Entities.Concrete
         public virtual Guid Id { get; set; }
         public virtual string ViewKey { get; set; }
         public virtual string ViewModel { get; set; }
+        public virtual string Layout { get; set; }
         public virtual string Domain { get; set; }
         public virtual string Controller { get; set; }
         public virtual string Action { get; set; }

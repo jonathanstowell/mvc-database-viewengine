@@ -30,19 +30,17 @@ namespace MvcThemable.ViewPipeline.VirtualPathProviders
         public override VirtualFile GetFile(string virtualPath)
         {
             var page = FindPage(virtualPath);
-            return page == null ? Previous.GetFile(virtualPath) : new DatabaseFile(virtualPath, page.Body);
+            return page == null ? Previous.GetFile(virtualPath) : new DatabaseFile(virtualPath, page.Body, page.ViewModel, page.Layout);
         }
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            var view = GetFile(virtualPath);
+            return null;
+        }
 
-            if (view is DatabaseFile)
-            {
-                return new DatabaseFileCacheDependency(DateTime.Now);
-            }
-
-            return Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
+        public override string GetFileHash(string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            return Guid.NewGuid().ToString();
         }
 
         protected IDatabaseView FindPage(string virtualPath)

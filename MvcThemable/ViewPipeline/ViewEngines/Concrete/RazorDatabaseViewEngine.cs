@@ -32,7 +32,8 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
 
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
         {
-            return DatabaseViewExists(virtualPath);
+            var ret = DatabaseViewExists(virtualPath);
+            return ret;
         }
 
         public bool DatabaseViewExists(string virtualPath)
