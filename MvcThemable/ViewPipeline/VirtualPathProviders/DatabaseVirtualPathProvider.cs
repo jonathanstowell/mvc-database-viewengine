@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Web.Caching;
 using System.Web.Hosting;
-using MvcThemable.Data.Abstract;
-using MvcThemable.Entities.Abstract;
+using MvcThemable.Entities.Concrete;
+using MvcThemable.Service.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
 using MvcThemable.ViewPipeline.VirtualFiles;
 
@@ -14,12 +14,12 @@ namespace MvcThemable.ViewPipeline.VirtualPathProviders
     public class DatabaseVirtualPathProvider : VirtualPathProvider
     {
         private readonly IViewKeyProcessor viewKeyProcessor;
-        private readonly IDatabaseViewRepository repository;
+        private readonly IDatabaseViewService service;
 
         public DatabaseVirtualPathProvider()
         {
             viewKeyProcessor = DependencyResolver.Current.GetService<IViewKeyProcessor>();
-            repository = DependencyResolver.Current.GetService<IDatabaseViewRepository>();
+            service = DependencyResolver.Current.GetService<IDatabaseViewService>();
         }
 
         public override bool FileExists(string virtualPath)
@@ -35,20 +35,27 @@ namespace MvcThemable.ViewPipeline.VirtualPathProviders
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            return null;
+            return FindPage(virtualPath) != null ? null : Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
         }
 
         public override string GetFileHash(string virtualPath, IEnumerable virtualPathDependencies)
         {
-            return Guid.NewGuid().ToString();
+            var file = FindPage(virtualPath);
+
+            if (file != null)
+            {
+                return file.ViewKey + file.LastModifiedDateTime;
+            }
+
+            return base.GetFileHash(virtualPath, virtualPathDependencies);
         }
 
-        protected IDatabaseView FindPage(string virtualPath)
+        protected DatabaseView FindPage(string virtualPath)
         {
             string key = viewKeyProcessor.Retrieve(virtualPath);
 
             if (!string.IsNullOrEmpty(key))
-                return repository.GetByViewKey(key);
+                return service.GetByViewKey(key);
 
             return null;
         }

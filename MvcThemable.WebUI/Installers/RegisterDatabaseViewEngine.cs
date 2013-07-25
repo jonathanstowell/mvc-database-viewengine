@@ -8,10 +8,14 @@ using Bootstrap;
 using Bootstrap.Extensions.StartupTasks;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using MvcThemable.Cache.Abstract;
+using MvcThemable.Cache.Concrete;
 using MvcThemable.Core.DatabaseViewRepositories;
 using MvcThemable.Data.Abstract;
 using MvcThemable.Request.Abstract;
 using MvcThemable.Request.Concrete;
+using MvcThemable.Service.Abstract;
+using MvcThemable.Service.Concrete;
 using MvcThemable.ViewPipeline.ViewEngines.Concrete;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Concrete;
@@ -36,7 +40,9 @@ namespace MvcThemable.WebUI.Installers
                 Component.For<IDatabaseViewRepository>().ImplementedBy<RavenDatabaseViewRepository>().LifeStyle.Singleton,
                 Component.For<IProvideViewLocations>().ImplementedBy<ProvideViewLocations>().LifeStyle.Singleton,
                 Component.For<IProvideCurrentRequestContext>().ImplementedBy<ProvideRequestContext>().LifeStyle.Singleton,
-                Component.For<IProvideViewModels>().ImplementedBy<ProvideViewModels>().LifeStyle.Singleton);
+                Component.For<IProvideViewModels>().ImplementedBy<ProvideViewModels>().LifeStyle.Singleton,
+                Component.For<IDatabaseViewService>().ImplementedBy<DatabaseViewService>().LifeStyle.Singleton,
+                Component.For<IDatabaseViewCacheManager>().ImplementedBy<DefaultDatabaseViewCacheManager>().LifeStyle.Singleton);
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Insert(0, new RazorDatabaseViewEngine());

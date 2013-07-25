@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using MvcThemable.Data.Abstract;
+using MvcThemable.Service.Abstract;
 using MvcThemable.ViewPipeline.ViewEngines.Abstract;
 using MvcThemable.ViewPipeline.ViewKeyProcessors.Abstract;
 using MvcThemable.ViewPipeline.ViewLocationCache;
@@ -12,7 +12,7 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
         private readonly IProvideViewLocations viewLocations;
         private readonly IViewKeyProcessor viewKeyProcessor;
 
-        private readonly IDatabaseViewRepository repository;
+        private readonly IDatabaseViewService service;
 
         public RazorDatabaseViewEngine()
             : this(null)
@@ -23,7 +23,7 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
         {
             viewLocations = DependencyResolver.Current.GetService<IProvideViewLocations>();
             viewKeyProcessor = DependencyResolver.Current.GetService<IViewKeyProcessor>();
-            repository = DependencyResolver.Current.GetService<IDatabaseViewRepository>();
+            service = DependencyResolver.Current.GetService<IDatabaseViewService>();
 
             FileExtensions = new[] { "dbhtml" };
 
@@ -41,7 +41,7 @@ namespace MvcThemable.ViewPipeline.ViewEngines.Concrete
             string key = viewKeyProcessor.Retrieve(virtualPath);
 
             if (!string.IsNullOrEmpty(key))
-                return repository.GetByViewKey(key) != null;
+                return service.GetByViewKey(key) != null;
 
             return false;
         }

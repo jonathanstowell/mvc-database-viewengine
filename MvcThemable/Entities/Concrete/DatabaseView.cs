@@ -3,7 +3,7 @@ using MvcThemable.Entities.Abstract;
 
 namespace MvcThemable.Entities.Concrete
 {
-    public class DatabaseView : IDatabaseView
+    public class DatabaseView
     {
         public virtual Guid Id { get; set; }
         public virtual string ViewKey { get; set; }
