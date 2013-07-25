@@ -6,6 +6,6 @@ namespace MvcThemable.Views.Models.Abstract
     public interface IProvideViewModels
     {
         IDictionary<string, string> GetModels(params string[] namespaces);
-        IDictionary<string, Type> GetModelProperties(string fullName);
+        IDictionary<string, string> GetModelProperties(string fullName);
     }
 }

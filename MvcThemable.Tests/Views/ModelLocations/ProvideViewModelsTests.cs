@@ -25,7 +25,7 @@ namespace MvcThemable.Tests.Views.ModelLocations
         {
             IProvideViewModels provideViewModels = new ProvideViewModels();
 
-            IDictionary<string, Type> result = provideViewModels.GetModelProperties("MvcThemable.Tests.Views.ModelLocations.Models.TestViewModel, MvcThemable.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+            IDictionary<string, string> result = provideViewModels.GetModelProperties("MvcThemable.Tests.Views.ModelLocations.Models.TestViewModel, MvcThemable.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
 
             Assert.That(result.Count(), Is.EqualTo(2));
         }

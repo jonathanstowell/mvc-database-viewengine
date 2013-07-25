@@ -30,16 +30,4 @@ namespace MvcThemable.ViewPipeline.VirtualFiles
                 ), false);
         }
     }
-
-    public class DatabaseFileCacheDependency : System.Web.Caching.CacheDependency
-    {
-        public DatabaseFileCacheDependency(DateTime lastModified)
-        {
-            base.SetUtcLastModified(lastModified);
-        }
-        public DatabaseFileCacheDependency()
-        {
-            base.SetUtcLastModified(DateTime.UtcNow);
-        }
-    }
 }

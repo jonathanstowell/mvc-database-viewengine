@@ -72,7 +72,18 @@
                 <h3>Edit Database View</h3>
             </div>
             <div class="modal-body">
-                <textarea id="edit-databaseview-body" class="tinymce" data-bind="value: Body"></textarea>
+                <label for="viewmodel">View Model</label>
+                <select data-bind="options: ViewModels, optionsText: 'Text', value: ViewModel, optionsCaption: 'Choose...'"></select>
+
+                <label for="layout">Layout</label>
+                <input id="layout" name="layout" type="text" placeholder="Layout…" data-bind="value: Layout"/>
+                
+                <label for="properties">View Model Properties</label>
+                <select data-bind="options: ViewModelProperties, optionsText: 'Value', value: ViewModelProperty, optionsCaption: 'Choose...'"></select>
+                <button data-bind="click: AddToBody" class="btn btn-primary">Add to Body</button>
+                
+                <label for="edit-databaseview-body">Content</label>
+                <textarea id="edit-databaseview-body" name="edit-databaseview-body" class="tinymce" data-bind="value: Body"></textarea>
                 
                 <button data-bind="click: submit" class="btn btn-primary">Save</button>
             </div>
@@ -85,12 +96,19 @@
             (function (index) {
                 database_view_components_model = index;
 
+                index.ViewModels = ko.observableArray([]);
+                index.ViewModelProperties = ko.observableArray([]);
+
                 index.ViewKey = ko.observable();
+                index.ViewModel = ko.observable();
+                index.ViewModelProperty = ko.observable();
+                index.Layout = ko.observable();
                 index.Body = ko.observable();
 
                 index.submit = function() {
-                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "body": tinyMCE.get('edit-databaseview-body').getContent() }, function (data) {
+                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "fullName": index.ViewModel().Text, "assemblyQualifiedName": index.ViewModel().Value, "layout": index.Layout(), "body": tinyMCE.get('edit-databaseview-body').getContent() }, function (data) {
                         index.editModal.modal('hide');
+                        window.location.reload();
                     });
                 };
                 
@@ -98,10 +116,31 @@
                     index.editModal.modal('hide');
                 };
 
+                index.ViewModel.subscribe(function(value) {
+                    if (!value) {
+                        return;
+                    }
+                    
+                    jQuery.get("@Url.Action("GetViewModelProperties", "Page")", { "fullClassName": value.Value }, function(data) {
+                        index.ViewModelProperties(data.Properties);
+                    });
+                });
+                
+                index.AddToBody = function() {
+                    jQuery('#edit-databaseview-body').tinymce().execCommand('mceInsertContent', false, "@@Model." + index.ViewModelProperty().Value);
+                }
+
                 jQuery(document).bind('editDatabaseComponent', function (e, viewModel, controller, action) {
                     jQuery.get("@Url.Action("Get", "Page")", { "controller": controller, "controllerAction": action }, function(data) {
-                        index.ViewKey(data.ViewKey);
-                        index.Body(data.Body);
+
+                        index.ViewModels(data.ViewModels);
+
+                        index.ViewKey(data.View.ViewKey);
+                        index.ViewModel(ko.utils.arrayFirst(index.ViewModels(), function(item) {
+                            return item.Text == data.View.ViewModel.FullName;
+                        }));
+                        index.Layout(data.View.Layout);
+                        index.Body(data.View.Body);
                         
                         jQuery('#edit-databaseview-body').tinymce().execCommand('mceInsertContent', false, index.Body());
                         

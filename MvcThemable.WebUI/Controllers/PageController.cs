@@ -30,11 +30,11 @@ namespace MvcThemable.WebUI.Controllers
             if (repository.Count() != 0)
                 return View("Index", repository.GetAll());
 
-            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "localhost.Page.Test1", ViewModel = "MvcThemable.WebUI.Models.TestViewModel", Layout = "~/Views/Shared/_Layout.cshtml", Domain = "localhost", Controller = "Page", Action = "Test1", Title = "Test 1", Body = "<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>localhost</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "default.Page.Test1", ViewModel = "MvcThemable.WebUI.Models.TestViewModel", Layout = "~/Views/Shared/_Layout.cshtml", Domain = "default", Controller = "Page", Action = "Test1", Title = "Test 1", Body = "<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>default</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "default.Page.Test2", ViewModel = "MvcThemable.WebUI.Models.Test2ViewModel", Layout = "~/Views/Shared/_Layout.cshtml", Domain = "default", Controller = "Page", Action = "Test2", Title = "Test 2", Body = "<h2>Test 2</h2><p>Today: @Model.Today</p><p>default</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "localhost.Page.Test3", ViewModel = "MvcThemable.WebUI.Models.Test3ViewModel", Layout = "~/Views/Shared/_Layout.cshtml", Domain = "localhost", Controller = "Page", Action = "Test3", Title = "Test 3", Body = "<h2>Test 3</h2><p>Number: @Model.Number</p><p>localhost</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
-            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "default.Page.Precompiled", ViewModel = "MvcThemable.WebUI.Models.Test3ViewModel", Layout = "~/Views/Shared/_Layout.cshtml", Domain = "default", Controller = "Page", Action = "Precompiled", Title = "Precompiled", Body = "<h2>Database Precompiled</h2><p>Number: @Model.Number</p><p>localhost</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "localhost.Page.Test1", ViewModel = new ViewModel { FullName = "MvcThemable.WebUI.Models.TestViewModel", AssemblyQualifiedName = typeof(TestViewModel).AssemblyQualifiedName }, Layout = "~/Views/Shared/_Layout.cshtml", Domain = "localhost", Controller = "Page", Action = "Test1", Title = "Test 1", Body = "<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>localhost</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "default.Page.Test1", ViewModel = new ViewModel { FullName = "MvcThemable.WebUI.Models.TestViewModel", AssemblyQualifiedName = typeof(TestViewModel).AssemblyQualifiedName }, Layout = "~/Views/Shared/_Layout.cshtml", Domain = "default", Controller = "Page", Action = "Test1", Title = "Test 1", Body = "<h2>Test 1</h2><p>@Model.Forename</p><p>@Model.Surname</p><p>default</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "default.Page.Test2", ViewModel = new ViewModel { FullName = "MvcThemable.WebUI.Models.Test2ViewModel", AssemblyQualifiedName = typeof(TestViewModel).AssemblyQualifiedName }, Layout = "~/Views/Shared/_Layout.cshtml", Domain = "default", Controller = "Page", Action = "Test2", Title = "Test 2", Body = "<h2>Test 2</h2><p>Today: @Model.Today</p><p>default</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "localhost.Page.Test3", ViewModel = new ViewModel { FullName = "MvcThemable.WebUI.Models.Test3ViewModel", AssemblyQualifiedName = typeof(TestViewModel).AssemblyQualifiedName }, Layout = "~/Views/Shared/_Layout.cshtml", Domain = "localhost", Controller = "Page", Action = "Test3", Title = "Test 3", Body = "<h2>Test 3</h2><p>Number: @Model.Number</p><p>localhost</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
+            repository.Save(new DatabaseView { Id = Guid.NewGuid(), ViewKey = "default.Page.Precompiled", ViewModel = new ViewModel { FullName = "MvcThemable.WebUI.Models.Test3ViewModel", AssemblyQualifiedName = typeof(TestViewModel).AssemblyQualifiedName }, Layout = "~/Views/Shared/_Layout.cshtml", Domain = "default", Controller = "Page", Action = "Precompiled", Title = "Precompiled", Body = "<h2>Database Precompiled</h2><p>Number: @Model.Number</p><p>localhost</p>", LastModifiedDateTime = DateTime.Now.AddDays(-1) });
 
             return View("Index", repository.GetAll());
         }
@@ -84,10 +84,12 @@ namespace MvcThemable.WebUI.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Update(string viewKey, string body)
+        public ActionResult Update(string viewKey, string fullName, string assemblyQualifiedName, string layout, string body)
         {
             var view = repository.GetByViewKey(viewKey);
 
+            view.ViewModel = new ViewModel { AssemblyQualifiedName = assemblyQualifiedName, FullName = fullName };
+            view.Layout = layout;
             view.Body = body;
 
             repository.Update(view);
@@ -134,12 +136,12 @@ namespace MvcThemable.WebUI.Controllers
             if (view == null)
                 view = repository.GetByViewKey(viewKeyProcessor.Generate("default", controller, controllerAction));
 
-            return Json(view, JsonRequestBehavior.AllowGet);
+            return Json(new { View = view, ViewModels = provideViewModels.GetModels("MvcThemable.WebUI.Models").ToSelectList() }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetViewModelProperties(string fullClassName)
         {
-            return Json(provideViewModels.GetModelProperties(fullClassName), JsonRequestBehavior.AllowGet);
+            return Json(new { Properties = provideViewModels.GetModelProperties(fullClassName).ToSelectList() }, JsonRequestBehavior.AllowGet);
         }
     }
 }
