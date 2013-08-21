@@ -88,7 +88,7 @@ namespace MvcThemable.WebUI.Controllers
         {
             var view = service.GetByViewKey(viewKey);
 
-            view.ViewModel = new ViewModel { AssemblyQualifiedName = assemblyQualifiedName, FullName = fullName };
+            view.ViewModel = string.IsNullOrWhiteSpace(assemblyQualifiedName) || string.IsNullOrWhiteSpace(fullName) ? null : new ViewModel { AssemblyQualifiedName = assemblyQualifiedName, FullName = fullName };
             view.Layout = layout;
             view.Body = body;
 
@@ -127,6 +127,11 @@ namespace MvcThemable.WebUI.Controllers
         public ActionResult Test3()
         {
             return View(new Test3ViewModel { Number = 7 });
+        }
+
+        public ActionResult Test4()
+        {
+            return PartialView();
         }
 
         public JsonResult Get(string controller, string controllerAction)

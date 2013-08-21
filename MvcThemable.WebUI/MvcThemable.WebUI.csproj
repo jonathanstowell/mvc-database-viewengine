@@ -482,6 +482,7 @@
     </None>
     <Content Include="Views\default\Page\Create.cshtml" />
     <Content Include="_MSBuild\NuGetPackageAndPublish.targets" />
+    <Content Include="Views\default\Page\Test4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvcThemable.Core\MvcThemable.Core.csproj">
@@ -492,6 +493,9 @@
       <Project>{E217C50C-F621-4C4D-849C-EAA226031205}</Project>
       <Name>MvcThemable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\libs\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

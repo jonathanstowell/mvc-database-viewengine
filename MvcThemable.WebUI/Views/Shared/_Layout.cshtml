@@ -106,7 +106,7 @@
                 index.Body = ko.observable();
 
                 index.submit = function() {
-                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "fullName": index.ViewModel().Text, "assemblyQualifiedName": index.ViewModel().Value, "layout": index.Layout(), "body": tinyMCE.get('edit-databaseview-body').getContent() }, function (data) {
+                    jQuery.post("@Url.Action("Update", "Page")", { "viewKey": index.ViewKey(), "fullName": index.ViewModel() ? index.ViewModel().Text : "", "assemblyQualifiedName": index.ViewModel() ? index.ViewModel().Value : "", "layout": index.Layout(), "body": tinyMCE.get('edit-databaseview-body').getContent() }, function (data) {
                         index.editModal.modal('hide');
                         window.location.reload();
                     });
@@ -137,7 +137,8 @@
 
                         index.ViewKey(data.View.ViewKey);
                         index.ViewModel(ko.utils.arrayFirst(index.ViewModels(), function(item) {
-                            return item.Text == data.View.ViewModel.FullName;
+                            if (data.View.ViewModel)
+                                return item.Text == data.View.ViewModel.FullName;
                         }));
                         index.Layout(data.View.Layout);
                         index.Body(data.View.Body);

@@ -26,7 +26,7 @@ namespace MvcThemable.ViewPipeline.VirtualFiles
                     string.Format("{0}{1}{2}",
                         this.viewModel != null ? "@model " + viewModel + Environment.NewLine : string.Empty,
                         layout != null ? "@{ Layout = \"" + layout + "\"; }" + Environment.NewLine : string.Empty,
-                        content + "<button class=\"btn btn-primary\" onclick=\"jQuery(document).trigger('editDatabaseComponent', [ '@Model.GetType().AssemblyQualifiedName', '@ViewContext.RouteData.GetRequiredString(\"controller\")', '@ViewContext.RouteData.GetRequiredString(\"action\")' ])\">Edit</button>")
+                        content + "<button class=\"btn btn-primary\" onclick=\"jQuery(document).trigger('editDatabaseComponent', [ '@if (Model != null) { @Model.GetType().AssemblyQualifiedName; }', '@ViewContext.RouteData.GetRequiredString(\"controller\")', '@ViewContext.RouteData.GetRequiredString(\"action\")' ])\">Edit</button>")
                 ), false);
         }
     }

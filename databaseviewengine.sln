@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemable", "MvcThemable\MvcThemable.csproj", "{E217C50C-F621-4C4D-849C-EAA226031205}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemable.WebUI", "MvcThemable.WebUI\MvcThemable.WebUI.csproj", "{675276D5-54FB-4633-8B18-BA0AE3A88245}"
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{17384C
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcThemeable.Plugins.Carousel", "MvcThemeable.Plugins.Carousel\MvcThemeable.Plugins.Carousel.csproj", "{956ED3FD-84B5-4BC4-B039-6490DFE7AE41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{A40D8C99-1E44-47B1-A6E1-E201C13BFFA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A40D8C99-1E44-47B1-A6E1-E201C13BFFA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A40D8C99-1E44-47B1-A6E1-E201C13BFFA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{956ED3FD-84B5-4BC4-B039-6490DFE7AE41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956ED3FD-84B5-4BC4-B039-6490DFE7AE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956ED3FD-84B5-4BC4-B039-6490DFE7AE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956ED3FD-84B5-4BC4-B039-6490DFE7AE41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

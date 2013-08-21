@@ -54,6 +54,9 @@
     <Compile Include="Entities\Concrete\DatabaseView.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Installation\IRegisterWidget.cs" />
+    <Compile Include="Plugin\Abstract\IAssemblyResolver.cs" />
+    <Compile Include="Plugin\Concrete\AssemblyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\Abstract\IProvideCurrentRequestContext.cs" />
     <Compile Include="Request\Concrete\ProvideRequestContext.cs" />
