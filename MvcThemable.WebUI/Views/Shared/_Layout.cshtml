@@ -135,15 +135,17 @@
 
                         index.ViewModels(data.ViewModels);
 
-                        index.ViewKey(data.View.ViewKey);
-                        index.ViewModel(ko.utils.arrayFirst(index.ViewModels(), function(item) {
-                            if (data.View.ViewModel)
-                                return item.Text == data.View.ViewModel.FullName;
-                        }));
-                        index.Layout(data.View.Layout);
-                        index.Body(data.View.Body);
-                        
-                        jQuery('#edit-databaseview-body').tinymce().execCommand('mceInsertContent', false, index.Body());
+                        if (data.View) {
+                            index.ViewKey(data.View.ViewKey);
+                            index.ViewModel(ko.utils.arrayFirst(index.ViewModels(), function(item) {
+                                if (data.View.ViewModel)
+                                    return item.Text == data.View.ViewModel.FullName;
+                            }));
+                            index.Layout(data.View.Layout);
+                            index.Body(data.View.Body);
+                            
+                            jQuery('#edit-databaseview-body').tinymce().execCommand('mceInsertContent', false, index.Body());
+                        }
                         
                         index.editModal.modal('show');
                     });

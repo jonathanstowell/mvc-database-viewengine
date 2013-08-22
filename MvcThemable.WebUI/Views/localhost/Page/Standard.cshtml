@@ -3,3 +3,5 @@
 }
 
 <h2>Localhost Standard</h2>
+
+<button class="btn btn-primary" onclick="jQuery(document).trigger('editDatabaseComponent', [ '@if (Model != null) { @Model.GetType().AssemblyQualifiedName }', '@ViewContext.RouteData.GetRequiredString("controller")', '@ViewContext.RouteData.GetRequiredString("action")' ])">Edit</button>
